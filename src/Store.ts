@@ -1,128 +1,74 @@
-import { combineReducers, createStore, Store } from 'redux'
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
+import { TypedUseSelectorHook } from 'react-redux'
 import { QuestionData } from './QuestionData'
 
-interface QuestionState {
-  readonly loading: boolean
-  readonly unanswered: QuestionData[]
-  readonly viewing: QuestionData | null
-  readonly searched: QuestionData[]
+export interface QuestionState {
+  loading: boolean
+  unanswered: QuestionData[]
+  viewing: QuestionData | null
+  searched: QuestionData[]
 }
 
-export interface AppState {
-  readonly questions: QuestionState
-}
-
-const initialQuestionState: QuestionState = {
+const initialState: QuestionState = {
   loading: false,
   unanswered: [],
   viewing: null,
   searched: []
 }
 
-export const GETTING_UNANSWERED_QUESTIONS = 'GettingUnansweredQuestions'
-export const GettingUnansweredQuestionsAction = () =>
-  ({
-    type: GETTING_UNANSWERED_QUESTIONS
-  } as const)
-
-export const GOT_UNANSWERED_QUESTIONS = 'GotUnansweredQuestions'
-export const GotUnansweredQuestionsAction = (questions: QuestionData[]) =>
-  ({
-    type: GOT_UNANSWERED_QUESTIONS,
-    payload: questions
-  } as const)
-
-export const GETTING_QUESTION = 'GettingQuestion'
-export const GettingQuestionAction = () =>
-  ({
-    type: GETTING_QUESTION
-  } as const)
-
-export const GOT_QUESTION = 'GotQuestion'
-export const GotQuestionAction = (question: QuestionData | null) =>
-  ({
-    type: GOT_QUESTION,
-    payload: question
-  } as const)
-
-export const SEARCHING_QUESTIONS = 'SearchingQuestions'
-export const SearchingQuestionsAction = () =>
-  ({
-    type: SEARCHING_QUESTIONS
-  } as const)
-
-export const SEARCHED_QUESTIONS = 'SearchedQuestions'
-export const SearchedQuestionsAction = (questions: QuestionData[]) =>
-  ({
-    type: SEARCHED_QUESTIONS,
-    payload: questions
-  } as const)
-
-type QuestionsActions =
-  | ReturnType<typeof GettingUnansweredQuestionsAction>
-  | ReturnType<typeof GotUnansweredQuestionsAction>
-  | ReturnType<typeof GettingQuestionAction>
-  | ReturnType<typeof GotQuestionAction>
-  | ReturnType<typeof SearchingQuestionsAction>
-  | ReturnType<typeof SearchedQuestionsAction>
-
-const questionsReducer = (
-  state = initialQuestionState,
-  action: QuestionsActions
-) => {
-  switch (action.type) {
-    case GETTING_UNANSWERED_QUESTIONS: {
-      return {
-        ...state,
-        loading: true,
-        unanswered: []
-      }
+const questionsSlice = createSlice({
+  name: 'questions',
+  initialState: initialState,
+  reducers: {
+    gettingUnansweredQuestions: (state) => {
+      state.loading = true
+      state.unanswered = []
+    },
+    gotUnansweredQuestions: (state, action: PayloadAction<QuestionData[]>) => {
+      state.loading = false
+      state.unanswered = action.payload
+    },
+    gettingQuestion: (state) => {
+      state.loading = true
+      state.viewing = null
+    },
+    gotQuestion: (state, action: PayloadAction<QuestionData | null>) => {
+      state.loading = false
+      state.viewing = action.payload
+    },
+    searchingQuestions: (state) => {
+      state.loading = true
+      state.searched = []
+    },
+    searchedQuestions: (state, action: PayloadAction<QuestionData[]>) => {
+      state.loading = false
+      state.searched = action.payload
     }
-    case GOT_UNANSWERED_QUESTIONS: {
-      return {
-        ...state,
-        loading: false,
-        unanswered: action.payload
-      }
-    }
-    case GETTING_QUESTION: {
-      return {
-        ...state,
-        loading: true,
-        viewing: null
-      }
-    }
-    case GOT_QUESTION: {
-      return {
-        ...state,
-        loading: false,
-        viewing: action.payload
-      }
-    }
-    case SEARCHING_QUESTIONS: {
-      return {
-        ...state,
-        loading: true,
-        searched: []
-      }
-    }
-    case SEARCHED_QUESTIONS: {
-      return {
-        ...state,
-        loading: false,
-        searched: action.payload
-      }
-    }
-    default:
-      return state
   }
-}
-
-const rootReducer = combineReducers<AppState>({
-  questions: questionsReducer
 })
 
-export function configureStore(): Store<AppState> {
-  const store = createStore(rootReducer, { questions: initialQuestionState })
-  return store
-}
+export const {
+  gettingUnansweredQuestions,
+  gotUnansweredQuestions,
+  gettingQuestion,
+  gotQuestion,
+  searchingQuestions,
+  searchedQuestions
+} = questionsSlice.actions
+
+const questionsReducer = questionsSlice.reducer
+
+export const store = configureStore({
+  reducer: {
+    questions: questionsReducer
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    })
+})
+
+export type rootState = ReturnType<typeof store.getState>
+
+export const useAppSelector: TypedUseSelectorHook<rootState> = useSelector

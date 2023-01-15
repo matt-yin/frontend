@@ -2,13 +2,12 @@
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import AnswerList from './AnswerList'
 import { Page } from './Page'
 import { getQuestion, postAnswer } from './QuestionData'
-import { AppState, GettingQuestionAction, GotQuestionAction } from './Store'
+import { gettingQuestion, gotQuestion, useAppSelector } from './Store'
 import {
   FieldContainer,
   FieldError,
@@ -28,7 +27,7 @@ type FormData = {
 
 const QuestionPage = () => {
   const dispatch = useDispatch()
-  const question = useSelector((state: AppState) => state.questions.viewing)
+  const question = useAppSelector((state) => state.questions.viewing)
   const [successfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const { questionId } = useParams()
   const {
@@ -39,9 +38,9 @@ const QuestionPage = () => {
 
   useEffect(() => {
     const doGetQuestion = async (id: number) => {
-      dispatch(GettingQuestionAction())
+      dispatch(gettingQuestion())
       const result = await getQuestion(id)
-      dispatch(GotQuestionAction(result))
+      dispatch(gotQuestion(result))
     }
     if (questionId) {
       doGetQuestion(Number(questionId))
