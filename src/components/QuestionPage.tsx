@@ -4,22 +4,22 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import AnswerList from './AnswerList'
-import { Page } from './Page'
-import { getQuestion, postAnswer } from './QuestionData'
-import { gettingQuestion, gotQuestion, useAppSelector } from './Store'
+import { getQuestion, postAnswer } from '../data/DataUtils'
+import { useAppSelector } from '../redux/Hooks'
+import { gettingQuestion, gotQuestion } from '../redux/QuestionsSlice'
 import {
-  FieldContainer,
-  FieldError,
-  FieldLabel,
   FieldSet,
+  FieldContainer,
+  FieldLabel,
   FieldTextArea,
+  FieldError,
   FormButtonContainer,
-  gray3,
-  gray6,
   PrimaryButton,
   SubmissionSuccess
-} from './Styles'
+} from '../styles/StyledComponents'
+import { gray6, gray3 } from '../styles/Variables'
+import AnswerList from './AnswerList'
+import { Page } from './Page'
 
 type FormData = {
   content: string

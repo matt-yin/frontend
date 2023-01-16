@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { Link } from 'react-router-dom'
-import { QuestionData } from './QuestionData'
-import { gray2, gray3 } from './Styles'
+import { QuestionData } from '../data/DataTypes'
+import { gray2, gray3 } from '../styles/Variables'
 
 interface Props {
   data: QuestionData

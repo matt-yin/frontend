@@ -3,13 +3,13 @@ import { css } from '@emotion/react'
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
+import { fontFamily, fontSize, gray2 } from '../styles/Variables'
 import { Header } from './Header'
 import { HomePage } from './HomePage'
 import { NotFoundPage } from './NotFoundPage'
 import QuestionPage from './QuestionPage'
 import SearchPage from './SearchPage'
 import SignInPage from './SignInPage'
-import { fontFamily, fontSize, gray2 } from './Styles'
 
 const AskPage = React.lazy(() => import('./AskPage'))
 

@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { fontFamily, fontSize, gray1, gray2, gray5 } from './Styles'
+import { gray5, gray1, fontFamily, fontSize, gray2 } from '../styles/Variables'
 import { UserIcon } from './UserIcon'
 
 type FormData = {

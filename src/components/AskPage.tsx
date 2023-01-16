@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Page } from './Page'
-import { postQuestion } from './QuestionData'
+import { postQuestion } from '../data/DataUtils'
 import {
   FieldContainer,
   FieldError,
@@ -12,7 +11,8 @@ import {
   FormButtonContainer,
   PrimaryButton,
   SubmissionSuccess
-} from './Styles'
+} from '../styles/StyledComponents'
+import { Page } from './Page'
 
 type FormData = {
   title: string

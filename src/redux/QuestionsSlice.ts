@@ -1,9 +1,7 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
-import { TypedUseSelectorHook } from 'react-redux'
-import { QuestionData } from './QuestionData'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { QuestionData } from '../data/DataTypes'
 
-export interface QuestionState {
+interface QuestionState {
   loading: boolean
   unanswered: QuestionData[]
   viewing: QuestionData | null
@@ -58,17 +56,4 @@ export const {
 } = questionsSlice.actions
 
 const questionsReducer = questionsSlice.reducer
-
-export const store = configureStore({
-  reducer: {
-    questions: questionsReducer
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false
-    })
-})
-
-export type rootState = ReturnType<typeof store.getState>
-
-export const useAppSelector: TypedUseSelectorHook<rootState> = useSelector
+export default questionsReducer

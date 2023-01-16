@@ -4,10 +4,11 @@ import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
+import { searchQuestion } from '../data/DataUtils'
+import { useAppSelector } from '../redux/Hooks'
+import { searchingQuestions, searchedQuestions } from '../redux/QuestionsSlice'
 import { Page } from './Page'
-import { searchQuestion } from './QuestionData'
 import { QuestionList } from './QuestionList'
-import { searchedQuestions, searchingQuestions, useAppSelector } from './Store'
 
 const SearchPage = () => {
   const dispatch = useDispatch()

@@ -4,16 +4,16 @@ import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Page } from './Page'
-import { PageTitle } from './PageTitle'
-import { getUnansweredQuestions } from './QuestionData'
-import { QuestionList } from './QuestionList'
+import { getUnansweredQuestions } from '../data/DataUtils'
+import { useAppSelector } from '../redux/Hooks'
 import {
   gettingUnansweredQuestions,
-  gotUnansweredQuestions,
-  useAppSelector
-} from './Store'
-import { PrimaryButton } from './Styles'
+  gotUnansweredQuestions
+} from '../redux/QuestionsSlice'
+import { PrimaryButton } from '../styles/StyledComponents'
+import { Page } from './Page'
+import { PageTitle } from './PageTitle'
+import { QuestionList } from './QuestionList'
 
 export const HomePage = () => {
   const dispatch = useDispatch()

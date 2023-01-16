@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { QuestionData } from '../data/DataTypes'
+import { accent2, gray5 } from '../styles/Variables'
 import { Question } from './Question'
-import { QuestionData } from './QuestionData'
-import { accent2, gray5 } from './Styles'
 
 interface Props {
   data: QuestionData[]
