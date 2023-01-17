@@ -7,20 +7,20 @@ export const questions: QuestionData[] = [
     content:
       'TypeScript seems to be getting popular so I wondered whether it is worth my time learning it? What benefits does it give over JavaScript?',
     userName: 'Bob',
-    created: new Date(),
+    created: new Date().toUTCString(),
     answers: [
       {
         answerId: 1,
         content: 'To catch problems earlier speeding up your developments',
         userName: 'Jane',
-        created: new Date()
+        created: new Date().toUTCString()
       },
       {
         answerId: 2,
         content:
           'So, that you can use the JavaScript features of tomorrow, today',
         userName: 'Fred',
-        created: new Date()
+        created: new Date().toUTCString()
       }
     ]
   },
@@ -30,7 +30,7 @@ export const questions: QuestionData[] = [
     content:
       'There seem to be a fair few state management tools around for React - React, Unstated, ... Which one should I use?',
     userName: 'Bob',
-    created: new Date(),
+    created: new Date().toUTCString(),
     answers: []
   }
 ]

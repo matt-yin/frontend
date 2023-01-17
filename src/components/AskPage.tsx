@@ -33,7 +33,7 @@ const AskPage = () => {
       title: data.title,
       content: data.content,
       userName: 'Fred',
-      created: new Date()
+      created: new Date().toUTCString()
     })
     setSuccessfullySubmitted(result ? true : false)
   }

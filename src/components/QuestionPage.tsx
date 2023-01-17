@@ -53,7 +53,7 @@ const QuestionPage = () => {
       questionId: question!.questionId,
       content: data.content,
       userName: 'Fred',
-      created: new Date()
+      created: new Date().toUTCString()
     })
     setSuccessfullySubmitted(result ? true : false)
   }
@@ -96,9 +96,11 @@ const QuestionPage = () => {
                   color: ${gray3};
                 `}
               >
-                {`Asked by ${
-                  question.userName
-                } on ${question.created.toLocaleDateString()} ${question.created.toLocaleTimeString()}`}
+                {`Asked by ${question.userName} on ${new Date(
+                  question.created
+                ).toLocaleDateString()} ${new Date(
+                  question.created
+                ).toLocaleTimeString()}`}
               </div>
               <AnswerList data={question.answers} />
               <form

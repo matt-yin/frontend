@@ -3,7 +3,7 @@ export interface QuestionData {
   title: string
   content: string
   userName: string
-  created: Date
+  created: string
   answers: AnswerData[]
 }
 
@@ -11,19 +11,19 @@ export interface PostQuestionData {
   title: string
   content: string
   userName: string
-  created: Date
+  created: string
 }
 
 export interface AnswerData {
   answerId: number
   content: string
   userName: string
-  created: Date
+  created: string
 }
 
 export interface PostAnswerData {
   questionId: number
   content: string
   userName: string
-  created: Date
+  created: string
 }

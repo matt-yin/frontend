@@ -29,9 +29,9 @@ const Answer = ({ data }: Props) => (
         color: ${gray3};
       `}
     >
-      {`Answered by ${
-        data.userName
-      } on ${data.created.toLocaleDateString()} ${data.created.toLocaleTimeString()}`}
+      {`Answered by ${data.userName} on ${new Date(
+        data.created
+      ).toLocaleDateString()} ${new Date(data.created).toLocaleTimeString()}`}
     </div>
   </div>
 )

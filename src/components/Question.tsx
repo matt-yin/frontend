@@ -45,9 +45,9 @@ export const Question = ({ data, showContent = true }: Props) => (
             : data.content}
         </div>
       )}
-      {`Asked by ${
-        data.userName
-      } on ${data.created.toLocaleDateString()} ${data.created.toLocaleTimeString()}`}
+      {`Asked by ${data.userName} on ${new Date(
+        data.created
+      ).toLocaleDateString()} ${new Date(data.created).toLocaleTimeString()}`}
     </div>
   </div>
 )
