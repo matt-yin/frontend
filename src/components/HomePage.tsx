@@ -2,31 +2,20 @@
 
 import { css } from '@emotion/react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getUnansweredQuestions } from '../data/DataUtils'
-import { useAppSelector } from '../redux/Hooks'
-import {
-  gettingUnansweredQuestions,
-  gotUnansweredQuestions
-} from '../redux/QuestionsSlice'
+import { useAppDispatch, useAppSelector } from '../redux/Hooks'
+import { getUnanswered } from '../redux/QuestionsSlice'
 import { PrimaryButton } from '../styles/StyledComponents'
 import { Page } from './Page'
 import { PageTitle } from './PageTitle'
 import { QuestionList } from './QuestionList'
 
 export const HomePage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const questions = useAppSelector((state) => state.questions.unanswered)
   const questionsLoading = useAppSelector((state) => state.questions.loading)
-
   useEffect(() => {
-    const doGetUnansweredQuestions = async () => {
-      dispatch(gettingUnansweredQuestions())
-      const unansweredQuestions = await getUnansweredQuestions()
-      dispatch(gotUnansweredQuestions(unansweredQuestions))
-    }
-    doGetUnansweredQuestions()
+    dispatch(getUnanswered())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

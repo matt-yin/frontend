@@ -1,5 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { QuestionData } from '../data/DataTypes'
+import {
+  getQuestion,
+  getUnansweredQuestions,
+  searchQuestion
+} from '../data/DataUtils'
 
 interface QuestionState {
   loading: boolean
@@ -15,45 +20,54 @@ const initialState: QuestionState = {
   searched: []
 }
 
+export const getUnanswered = createAsyncThunk(
+  'questions/getUnanswered',
+  async () => {
+    return await getUnansweredQuestions()
+  }
+)
+
+export const getById = createAsyncThunk(
+  'questions/getById',
+  async (id: number) => {
+    return await getQuestion(id)
+  }
+)
+
+export const getSearched = createAsyncThunk(
+  'questions/getSearched',
+  async (criteria: string) => {
+    return await searchQuestion(criteria)
+  }
+)
+
 const questionsSlice = createSlice({
   name: 'questions',
   initialState: initialState,
-  reducers: {
-    gettingUnansweredQuestions: (state) => {
+  reducers: {},
+  extraReducers: (buidler) => {
+    buidler.addCase(getUnanswered.pending, (state) => {
       state.loading = true
-      state.unanswered = []
-    },
-    gotUnansweredQuestions: (state, action: PayloadAction<QuestionData[]>) => {
+    })
+    buidler.addCase(getUnanswered.fulfilled, (state, { payload }) => {
       state.loading = false
-      state.unanswered = action.payload
-    },
-    gettingQuestion: (state) => {
+      state.unanswered = payload
+    })
+    buidler.addCase(getById.pending, (state) => {
       state.loading = true
-      state.viewing = null
-    },
-    gotQuestion: (state, action: PayloadAction<QuestionData | null>) => {
+    })
+    buidler.addCase(getById.fulfilled, (state, { payload }) => {
       state.loading = false
-      state.viewing = action.payload
-    },
-    searchingQuestions: (state) => {
+      state.viewing = payload
+    })
+    buidler.addCase(getSearched.pending, (state) => {
       state.loading = true
-      state.searched = []
-    },
-    searchedQuestions: (state, action: PayloadAction<QuestionData[]>) => {
+    })
+    buidler.addCase(getSearched.fulfilled, (state, { payload }) => {
       state.loading = false
-      state.searched = action.payload
-    }
+      state.searched = payload
+    })
   }
 })
 
-export const {
-  gettingUnansweredQuestions,
-  gotUnansweredQuestions,
-  gettingQuestion,
-  gotQuestion,
-  searchingQuestions,
-  searchedQuestions
-} = questionsSlice.actions
-
-const questionsReducer = questionsSlice.reducer
-export default questionsReducer
+export default questionsSlice.reducer

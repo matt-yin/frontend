@@ -2,11 +2,10 @@
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getQuestion, postAnswer } from '../data/DataUtils'
-import { useAppSelector } from '../redux/Hooks'
-import { gettingQuestion, gotQuestion } from '../redux/QuestionsSlice'
+import { postAnswer } from '../data/DataUtils'
+import { useAppDispatch, useAppSelector } from '../redux/Hooks'
+import { getById } from '../redux/QuestionsSlice'
 import {
   FieldSet,
   FieldContainer,
@@ -26,7 +25,7 @@ type FormData = {
 }
 
 const QuestionPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const question = useAppSelector((state) => state.questions.viewing)
   const [successfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const { questionId } = useParams()
@@ -37,13 +36,8 @@ const QuestionPage = () => {
   } = useForm<FormData>({ mode: 'onBlur' })
 
   useEffect(() => {
-    const doGetQuestion = async (id: number) => {
-      dispatch(gettingQuestion())
-      const result = await getQuestion(id)
-      dispatch(gotQuestion(result))
-    }
     if (questionId) {
-      doGetQuestion(Number(questionId))
+      dispatch(getById(Number(questionId)))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionId])
